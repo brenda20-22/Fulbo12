@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fulbo12.Core.Persistencia.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fulbo12.Core.Mvc", "Fulbo12.Core.Mvc\Fulbo12.Core.Mvc.csproj", "{F9FAA377-DE35-4DFE-96E9-232415051AE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fulbo12.Core.Servicios.Fluent", "Fulbo12.Core.Servicios.Fluent\Fulbo12.Core.Servicios.Fluent.csproj", "{59EAFFF6-9C39-43D2-BAD8-9487DDF3D380}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{F9FAA377-DE35-4DFE-96E9-232415051AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9FAA377-DE35-4DFE-96E9-232415051AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9FAA377-DE35-4DFE-96E9-232415051AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EAFFF6-9C39-43D2-BAD8-9487DDF3D380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EAFFF6-9C39-43D2-BAD8-9487DDF3D380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EAFFF6-9C39-43D2-BAD8-9487DDF3D380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EAFFF6-9C39-43D2-BAD8-9487DDF3D380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
