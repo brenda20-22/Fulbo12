@@ -7,10 +7,10 @@ namespace Fulbo12.Core.Mvc.ViewModels;
 
 public class VMFutbolista
 {
-    public PersonaJuego Persona { get; set; }
-    public SelectList Posiciones { get; set; }
-    public SelectList Equipos { get; set; }
-    public SelectList Tipos { get; set; }
+    public PersonaJuego PersonaJugador { get; set; }
+    public SelectList PosicionesJugador { get; set; }
+    public SelectList EquipoJugador { get; set; }
+    public SelectList Tipojugador { get; set; }
 
     [Range(50, 99, ErrorMessage = "La valoracion del jugador tiene que estar entre el rango definido")]
 
@@ -19,35 +19,33 @@ public class VMFutbolista
 
     public VMFutbolista(IEnumerable<Posicion> posiciones, IEnumerable<Equipo> equipos, IEnumerable<TipoFutbolista> tipos)
     {
-        Posiciones = new SelectList(posiciones,
+        PosicionesJugador = new SelectList(posiciones,
                                     dataTextField: nameof(Posicion.Abreviado),
                                     dataValueField: nameof(Posicion.Id));
-        Equipos = new SelectList(equipos,
+        EquipoJugador = new SelectList(equipos,
                                     dataTextField: nameof(Equipo.Nombre),
                                     dataValueField: nameof(Equipo.Id));
-        Tipos = new SelectList(tipos,
+        Tipojugador = new SelectList(tipos,
                             dataTextField: nameof(TipoFutbolista.Nombre),
                             dataValueField: nameof(TipoFutbolista.Id));
     }
     public void AsignarPosiciones(IEnumerable<Posicion> posiciones)
     {
-        Posiciones = new SelectList(posiciones,
+        PosicionesJugador = new SelectList(posiciones,
                                             dataTextField: nameof(Posicion.Abreviado),
                                             dataValueField: nameof(Posicion.Id));
     }
 
-    internal Futbolista CrearFutbolista(IUnidad unidad)
+    internal async Task<Futbolista> CrearFutbolistaAsync(IUnidad unidad)
     {
         // IdPais se setea en base a una opción seleccionada del SelectList
-        var futbolista = unidad.RepoPersona.ObtenerPorId(idPersona);
-        return new PersonaJuego()
+        var futbolista = await unidad.RepoPersona.ObtenerPorIdAsync(PersonaJugador.Id);
+        return new Futbolista()
         {
-            Altura = AlturaPersona,
-            Nacimiento = NacimientoPersona,
-            Nombre = NombrePersona,
-            Pais = pais!,
-            Peso = PesoPersona,
-            Apellido = ApellidoPersona
-        }
+            Persona = PersonaJugador,
+            Posiciones = PosicionesJugador!,
+            Tipofutbolista = Tipojugador!,
+            Equipo = EquipoJugador!,
+        };
     }
 }
