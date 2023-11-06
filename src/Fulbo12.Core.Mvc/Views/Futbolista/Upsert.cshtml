@@ -1,0 +1,39 @@
+@using Fulbo12.Core.Mvc.ViewModels;
+@model VMFutbolista;
+@{
+    var texto = Model.IdPersonaJuego == 0 ? "Alta Futbolista" : "Modificar Futbolista";
+    ViewData["Title"] = texto;
+}
+
+<form asp-controller="Futbolista" asp-action="Upsert" method="post">
+    <div asp-validation-summary="All"></div>
+    <div><input type="hidden" asp-for="@Model.IdPersonaJuego" /></div>
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <label asp-for="Persona.Nombre" class="col-form-label">Nombre</label>
+        </div>
+        <div class="col-auto">
+            <input asp-for="NombreLiga" class="form-control" />
+        </div>
+    </div>
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <select asp-items="Model.Paises" asp-for="IdPais" class="form-select">
+                @if (Model.IdLiga == 0)
+                {
+                    <option selected="selected" value="" disabled>Seleccione un pais</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            @if (Model.IdLiga == 0)
+            {
+                <button type="submit" class="btn btn-primary">@texto</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-warning">@texto</button>
+            }
+        </div>
+    </div>
+</form>

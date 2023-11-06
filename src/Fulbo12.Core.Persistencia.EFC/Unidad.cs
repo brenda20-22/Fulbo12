@@ -10,6 +10,7 @@ public class Unidad : IUnidad
     public IRepoEquipo RepoEquipo => _repoEquipo;
     public IRepoFutbolista RepoFutbolista => _repoFutbolista;
     public IRepoTipoFutbolista RepoTipoFutbolista => _repoTipoFutbolista;
+    public IRepoPosicion RepoPosicion => _repoPosicion;
 
     RepoPais _repoPais;
     RepoPersona _repoPersona;
@@ -17,6 +18,7 @@ public class Unidad : IUnidad
     RepoEquipo _repoEquipo;
     RepoFutbolista _repoFutbolista;
     RepoTipoFutbolista _repoTipoFutbolista;
+    RepoPosicion _repoPosicion;
     private readonly Fulbo12Contexto Contexto;
     public Unidad(Fulbo12Contexto contexto)
     {
@@ -27,6 +29,7 @@ public class Unidad : IUnidad
         _repoEquipo = new RepoEquipo(contexto);
         _repoFutbolista = new RepoFutbolista(contexto);
         _repoTipoFutbolista = new RepoTipoFutbolista(contexto);
+        _repoPosicion = new RepoPosicion(contexto);
     }
     public void Guardar()
     {

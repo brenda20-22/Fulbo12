@@ -8,6 +8,7 @@ namespace Fulbo12.Core.Mvc.ViewModels;
 public class VMFutbolista
 {
     public PersonaJuego PersonaJugador { get; set; }
+    public short IdPersonaJuego { get; set; }
     public SelectList PosicionesJugador { get; set; }
     public SelectList EquipoJugador { get; set; }
     public SelectList Tipojugador { get; set; }
@@ -17,8 +18,9 @@ public class VMFutbolista
     public byte Valoracion { get; set; }
 
 
-    public VMFutbolista(IEnumerable<Posicion> posiciones, IEnumerable<Equipo> equipos, IEnumerable<TipoFutbolista> tipos)
+    public VMFutbolista(PersonaJuego personaJuego, IEnumerable<Posicion> posiciones, IEnumerable<Equipo> equipos, IEnumerable<TipoFutbolista> tipos)
     {
+        PersonaJugador = personaJuego;
         PosicionesJugador = new SelectList(posiciones,
                                     dataTextField: nameof(Posicion.Abreviado),
                                     dataValueField: nameof(Posicion.Id));

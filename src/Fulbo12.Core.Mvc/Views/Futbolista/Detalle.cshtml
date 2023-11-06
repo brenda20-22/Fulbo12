@@ -1,0 +1,11 @@
+@using Fulbo12.Core.Futbol;
+@model Futbolista;
+@{
+    ViewData["Title"] = "Futbolista - Detalle";
+}
+
+<a asp-controller="Futbolista" asp-action="Alta" asp-route-Id="@Model.Id">
+    <button type="submit" class="btn btn-primary"><i class="bi bi-dribbble">Hacer Futbolista</i></button>
+</a>
+<h2 class="text-center">@Model.Persona.NombreCompleto @Model.Posiciones</h2>
+<h5 class="text-center"> @Model.Equipo.Nombre • @Model.Tipofutbolista</h5>

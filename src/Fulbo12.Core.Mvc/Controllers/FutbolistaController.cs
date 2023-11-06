@@ -1,3 +1,5 @@
+using Fulbo12.Core.Futbol;
+using Fulbo12.Core.Mvc.ViewModels;
 using Fulbo12.Core.Persistencia;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,5 +20,22 @@ public class FutbolistaController : Controller
     public IActionResult Error()
     {
         return View("Error!");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Alta(short idPersona)
+    {
+        var persona = await _unidad.RepoPersona.ObtenerPorIdAsync(idPersona);
+        if (persona is null)
+            return NotFound();
+
+        var tipoFutbolistas = await _unidad.RepoTipoFutbolista.ObtenerAsync();
+        var posiciones = await _unidad.RepoPosicion.ObtenerAsync();
+        var equipos = await _unidad.RepoEquipo.ObtenerAsync(includes: "Liga");
+
+        var vmFutbolista =
+            new VMFutbolista(persona, posiciones, equipos, tipoFutbolistas);
+
+        return View("Upsert", vmFutbolista);
     }
 }
