@@ -10,23 +10,31 @@
     <div><input type="hidden" asp-for="@Model.IdPersonaJuego" /></div>
     <div class="row g-2 align-items-center">
         <div class="col-auto">
-            <label asp-for="Persona.Nombre" class="col-form-label">Nombre</label>
-        </div>
-        <div class="col-auto">
-            <input asp-for="NombreLiga" class="form-control" />
-        </div>
-    </div>
-    <div class="row g-2 align-items-center">
-        <div class="col-auto">
-            <select asp-items="Model.Paises" asp-for="IdPais" class="form-select">
-                @if (Model.IdLiga == 0)
+            <select asp-items="Model.PosicionesJugador" asp-for="IdPosicion" class="form-select">
+                @if (Model.IdPosicion == 0)
                 {
-                    <option selected="selected" value="" disabled>Seleccione un pais</option>
+                    <option selected="selected" value="" disabled>Seleccione una posicion</option>
                 }
             </select>
         </div>
         <div class="col-auto">
-            @if (Model.IdLiga == 0)
+            <select asp-items="Model.EquipoJugador" asp-for="IdEquipo" class="form-select">
+                @if (Model.IdEquipo == 0)
+                {
+                    <option selected="selected" value="" disabled>Seleccione una equipo</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <select asp-items="Model.Tipojugador" asp-for="IdTipo" class="form-select">
+                @if (Model.IdTipo == 0)
+                {
+                    <option selected="selected" value="" disabled>Seleccione una tipo</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            @if (Model.IdPersonaJuego == 0)
             {
                 <button type="submit" class="btn btn-primary">@texto</button>
             }
