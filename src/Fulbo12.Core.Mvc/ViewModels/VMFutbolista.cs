@@ -28,6 +28,7 @@ public class VMFutbolista
         PosicionesJugador = new SelectList(posiciones,
                                     dataTextField: nameof(Posicion.Abreviado),
                                     dataValueField: nameof(Posicion.Id));
+
         EquipoJugador = new SelectList(equipos,
                                     dataTextField: nameof(Equipo.Nombre),
                                     dataValueField: nameof(Equipo.Id));
@@ -52,7 +53,7 @@ public class VMFutbolista
         return new Futbolista()
         {
             Persona = PersonaJugador,
-            //  Posiciones = PosicionesJugador!,
+            //Posiciones = PosicionesJugador!,
             Tipofutbolista = TipoJugador!,
             Equipo = EquipoJugador!,
         };

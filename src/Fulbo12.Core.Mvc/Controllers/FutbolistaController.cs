@@ -2,6 +2,10 @@ using Fulbo12.Core.Futbol;
 using Fulbo12.Core.Mvc.ViewModels;
 using Fulbo12.Core.Persistencia;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Fulbo12.Core.Mvc.Controllers;
 
@@ -9,6 +13,7 @@ public class FutbolistaController : Controller
 {
     private readonly IUnidad _unidad;
     public FutbolistaController(IUnidad unidad) => _unidad = unidad;
+    
 
     public async Task<IActionResult> Listado()
     {
@@ -20,6 +25,23 @@ public class FutbolistaController : Controller
     public IActionResult Error()
     {
         return View("Error!");
+    }
+    [HttpGet]
+    public ActionResult AgregarPosiciones()
+    {
+        List<SelectListItem> SelectPosiciones = new List<SelectListItem>();
+
+        foreach(Posicion posicion in PosicionesFixture.posiciones) 
+        {
+            SelectListItem selectList = new SelectListItem()
+            {
+                Text = posicion.Abreviado,
+                Value = posicion.Id.ToString(),
+                Selected= posicion.IsSelected
+            };
+            SelectPosiciones.Add(selectList); 
+        }
+        FutbolistaVM futbolistaVM
     }
 
     [HttpGet]
