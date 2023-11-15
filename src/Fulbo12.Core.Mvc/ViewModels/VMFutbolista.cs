@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using Fulbo12.Core.Futbol;
 using Fulbo12.Core.Persistencia;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualBasic;
 
 namespace Fulbo12.Core.Mvc.ViewModels;
 
@@ -20,6 +19,7 @@ public class VMFutbolista
     [Range(50, 99, ErrorMessage = "La valoracion del jugador tiene que estar entre el rango definido")]
 
     public byte Valoracion { get; set; }
+    public VMFutbolista(){}
 
 
     public VMFutbolista(PersonaJuego personaJuego, IEnumerable<Posicion> posiciones, IEnumerable<Equipo> equipos, IEnumerable<TipoFutbolista> tipos)
@@ -46,14 +46,14 @@ public class VMFutbolista
     internal async Task<Futbolista> CrearFutbolistaAsync(IUnidad unidad)
     {
         // IdPais se setea en base a una opción seleccionada del SelectList
-        var personaBase = await unidad.RepoPersona.ObtenerPorIdAsync(PersonaJugador.Id);
-        //var PosicionesJugador = await unidad.RepoPosicion.Obtener(IdPosicion);
+        //var personaBase = await unidad.RepoPersona.ObtenerPorIdAsync(PersonaJugador.Id);
         var TipoJugador = await unidad.RepoTipoFutbolista.ObtenerPorIdAsync(IdTipo);
         var EquipoJugador = await unidad.RepoEquipo.ObtenerPorIdAsync(IdEquipo);
         return new Futbolista()
         {
             Persona = PersonaJugador,
-            //Posiciones = PosicionesJugador!,
+            Posiciones = new List<Posicion>(),
+            //pensar en como hacer para que el futbolista acepte mas de una posicion.
             Tipofutbolista = TipoJugador!,
             Equipo = EquipoJugador!,
         };
