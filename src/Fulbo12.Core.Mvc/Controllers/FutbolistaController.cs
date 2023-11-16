@@ -1,13 +1,7 @@
-using Fulbo12.Core.Futbol;
 using Fulbo12.Core.Mvc.ViewModels;
 using Fulbo12.Core.Persistencia;
-using Fulbo12.Core.Persistencia.EFC;
 using Fulbo12.Core.Persistencia.Excepciones;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Fulbo12.Core.Mvc.Controllers;
 
@@ -35,7 +29,7 @@ public class FutbolistaController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Alta(short idPersona)
+    public async Task<IActionResult> Alta(short idPersona, byte valoracion)
     {
         var persona = (await _unidad.RepoPersona.ObtenerAsync(p => p.Id == idPersona, includes: "Pais")).FirstOrDefault();
         if (persona is null)
@@ -46,9 +40,22 @@ public class FutbolistaController : Controller
         var equipos = await _unidad.RepoEquipo.ObtenerAsync(includes: "Liga");
 
         var vmFutbolista =
-            new VMFutbolista(persona, posiciones, equipos, tipoFutbolistas);
+            new VMFutbolista(persona, posiciones, equipos, tipoFutbolistas, valoracion);
 
         return View("Upsert", vmFutbolista);
+    }
+    [HttpGet]
+
+    public async Task<IActionResult> Modificar(short? id)
+    {
+        if (id is null || id == 0)
+            return NotFound();
+
+        var futbolista = await _unidad.RepoFutbolista.ObtenerPorIdAsync(id);
+        if (futbolista is null)
+            return NotFound();
+
+        return View("Upsert", futbolista);
     }
 
     [HttpPost]
@@ -58,21 +65,23 @@ public class FutbolistaController : Controller
         if (!ModelState.IsValid)
         {
             vMFutbolista.AsignarPosiciones(await _unidad.RepoPosicion.ObtenerAsync());
+            vMFutbolista.AsignarEquipo(await _unidad.RepoEquipo.ObtenerAsync());
+            vMFutbolista.AsignarTipo(await _unidad.RepoTipoFutbolista.ObtenerAsync());
             return View("Upsert", vMFutbolista);
         }
 
-        if (vMFutbolista.IdPersonaJuego == 0)
+        if (vMFutbolista.IdFutbolista == 0)
         {
-            var futbolista = await vMFutbolista.CrearFutbolistaAsync(_unidad);
+            var futbolista =  await vMFutbolista.CrearFutbolistaAsync(_unidad);
             await _unidad.RepoFutbolista.AltaAsync(futbolista);
         }
         else
         {
-            var futbolistaRepo = await _unidad.RepoPersona.ObtenerPorIdAsync(vMFutbolista.IdPersonaJuego);
+            var futbolistaRepo = await _unidad.RepoFutbolista.ObtenerPorIdAsync(vMFutbolista.IdFutbolista);
             if (futbolistaRepo is null)
                 return NotFound();
-            futbolistaRepo.Nombre = futbolistaRepo.NombreCompleto;
-            _unidad.RepoPersona.Modificar(futbolistaRepo);
+            futbolistaRepo.Persona.Nombre = futbolistaRepo.Persona.Nombre;
+            _unidad.RepoFutbolista.Modificar(futbolistaRepo);
         }
         try
         {
@@ -84,4 +93,5 @@ public class FutbolistaController : Controller
         }
         return RedirectToAction(nameof(Listado));
     }
+
 }

@@ -7,9 +7,18 @@
 
 <form asp-controller="Futbolista" asp-action="Upsert" method="post">
     <div asp-validation-summary="All"></div>
+    <div><input type="hidden" asp-for="@Model.IdFutbolista" /></div>
     <div><input type="hidden" asp-for="@Model.IdPersonaJuego" /></div>
-    <div><h3>@Model.PersonaJugador.NombreCompleto, @Model.PersonaJugador.Altura, @Model.PersonaJugador.Pais , @Model.PersonaJugador.Peso</h3></div>
+<h2 class="text-center">@Model.PersonaJugador.Nombre @Model.PersonaJugador.Apellido</h2>
+<h5 class="text-center"> @Model.PersonaJugador.Pais.Nombre • @Model.PersonaJugador.Altura m.</h5>
     <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <label asp-for="Valoracion" class="col-form-label">valoracion (entre 50 a 99)</label>
+        </div>
+        <div class="col-auto">
+            <input asp-for="Valoracion" class="form-control" />
+        </div>
+        <div class="row g-2 align-items-center">
         <div class="col-auto">
             <select asp-items="Model.PosicionesJugador" asp-for="IdPosicion" class="form-select">
                 @if (Model.IdPosicion == 0)
@@ -17,6 +26,7 @@
                     <option selected="selected" value="" disabled>Seleccione una posicion</option>
                 }
             </select>
+        </div>
         </div>
         <div class="row g-2 align-items-center">
         <div class="col-auto">
@@ -40,7 +50,7 @@
         </div>
         <div class="row g-2 align-items-center">
         <div class="col-auto">
-            @if (Model.IdPersonaJuego == 0)
+            @if (Model.IdFutbolista == 0)
             {
                 <button type="submit" class="btn btn-primary">@texto</button>
             }
